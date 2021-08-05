@@ -1,42 +1,9 @@
-import sys
-import os
 from typing import Any
-
-import jsonschema
-import re
-
 import pytest
 
 from main import validall_decorator, ResultVerificationError
 from tests.constant_test_cases import VALID_RESULT_VERIFICATION_ERROR_CASES
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-def function_one(dict_json: dict) -> bool:
-    my_schema = {
-        "type": "object",
-        "required": [
-            "city"
-        ],
-        "additionalProperties": False,
-        "properties": {
-            "city": {
-                "type": "string"
-            }
-        }
-    }
-
-    try:
-        jsonschema.validate(instance=dict_json, schema=my_schema)
-    except jsonschema.ValidationError:
-        return False
-    return True
-
-
-def function_two(a: str) -> bool:
-    pattern = re.compile(r'{\D*}')
-    return bool(pattern.match(a))
+from tests.functions import function_one, function_two
 
 
 @validall_decorator(input_validation=function_one,

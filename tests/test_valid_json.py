@@ -1,42 +1,6 @@
-import sys
-import os
-import jsonschema
-import re
 from main import validall_decorator
 from tests.constant_test_cases import VALID_JSON_TEST_CASES
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-def function_one(dict_json: dict) -> bool:
-    my_schema = {
-        "type": "object",
-        "required": [
-            "city"
-        ],
-        "additionalProperties": False,
-        "properties": {
-            "city": {
-                "type": "string"
-            }
-        }
-    }
-
-    try:
-        jsonschema.validate(instance=dict_json, schema=my_schema)
-    except jsonschema.ValidationError:
-        return False
-    return True
-
-
-def function_two(a: str) -> bool:
-    pattern = re.compile(r'{\D*}')
-    return bool(pattern.match(a))
-
-
-def function_for_default_behavior() -> bool:
-    print('Я функция по умолчанию')
-    return True
+from tests.functions import function_one, function_two, function_for_default_behavior
 
 
 @validall_decorator(input_validation=function_one,
