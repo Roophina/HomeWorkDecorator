@@ -5,7 +5,7 @@ from tests.functions import function_one, function_two, function_for_default_beh
 
 @validall_decorator(input_validation=function_one,
                     result_validation=function_two, on_fail_repeat_times=1,
-                    default_behavior=function_for_default_behavior)
+                    default_behavior=function_for_default_behavior) # type: ignore
 def my_function(input_variable: dict) -> str:
     print('Я декорируемая функция')
     return input_variable.__str__().upper()
